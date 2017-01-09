@@ -6,7 +6,7 @@
 
 import * as axios from 'axios';
 
-export const getUserData = (url: string, credentials: string) => {
+export const userData = (url: string, credentials: string) => {
     const authOptions = {
       method: 'POST',
       url: url,
