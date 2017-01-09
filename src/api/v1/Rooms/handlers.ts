@@ -14,7 +14,7 @@ const handlers = {
     reply(request.query);
   },
 
-  login: (request: Request, reply: IReply) => {
+  getinfo: (request: Request, reply: IReply) => {
     console.log(request.payload);
 
     var authOptions = {

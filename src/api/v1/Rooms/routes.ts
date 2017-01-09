@@ -30,7 +30,7 @@ const routes: IRouteConfiguration[] = [
         },
       },
     },
-    handler: handlers.login,
+    handler: handlers.getinfo,
   },
 ];
 
