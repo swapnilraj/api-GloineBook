@@ -7,57 +7,35 @@ import {
   IReply,
 } from 'hapi';
 
-import * as axios from 'axios';
+import {
+  getUserData,
+  checkAvailability,
+} from './controller';
 
 const handlers = {
 
-  getinfo: (request: Request, reply: IReply) => {
+  getinfo: async (request: Request, reply: IReply) => {
     console.log(request.payload);
 
-    var authOptions = {
-      method: 'POST',
-      url: 'https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr3.cancel.pl',
-      headers: {
-          'Authorization': 'Basic ' + request.payload.credentials,
-      },
-      json: true,
-    };
-
-    axios(authOptions)
-      .then(function(response){
-        console.log(response);
-      })
-      .catch(function(err){
-        console.log(err);
-      },
-    ); 
-
-    reply({ success: true });
-    
+    try{
+      const response = await getUserData('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr3.cancel.pl',
+        request.payload.credentials);
+        reply({ success: response.data });
+    } catch(err) {
+      console.log(err);
+    }
   },
 
-  checkAvailability: (request: Request, reply: IReply) => {
+  checkAvailability: async (request: Request, reply: IReply) => {
     console.log(request.payload);
 
-    var authOptions = {
-      method: 'POST',
-      url: 'https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr' + request.payload.roomNumber + '.request.pl',
-      headers: {
-          'Authorization': 'Basic ' + request.payload.credentials,
-      },
-      json: true,
-    };
-
-    axios(authOptions)
-      .then(function(response){
-        console.log(response);
-      })
-      .catch(function(err){
-        console.log(err);
-      },
-    ); 
-
-    reply({ success: true });
+    try{
+      const response = await checkAvailability('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr', 
+      request.payload.credentials, request.payload.roomNumber);
+      reply({ success: response.data});
+    } catch(err) {
+      console.log(err);
+    }
     
   },
 };
