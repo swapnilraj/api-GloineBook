@@ -17,16 +17,19 @@ export const getUserData = async (url: string, credentials: string) => {
       return $('body > h1').text().split('for')[1].split(' ');
     } catch(err) {
       console.log(err);
+      return null;
     }
-    return null;
 };
 
-export const getRoomData = async (url: string, credentials: string, roomNumber: number) => {
+export const getRoomData = async (url: string, credentials: string, roomNumber: number, startDate: number) => {
     try{
       const response = await checkAvailability(url, credentials, roomNumber);
       const document: string = response.data as any;
-      let $ = cheerio.load(document);
-      $ = $; //temp to avoid lint warnings
+      const $ = cheerio.load(document);
+      console.log(document);
+      const table = $('tr').text().split('\n');
+      console.log('???????????? '+table[1] + "\n????????????");
+      console.log(startDate);
     } catch(err) {
       console.log(err);
     }
