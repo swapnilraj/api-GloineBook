@@ -7,7 +7,7 @@ import {
   IReply,
 } from 'hapi';
 
-import axios from 'axios';
+import * as axios from 'axios';
 
 const handlers = {
   getUsers: (request: Request, reply: IReply) => {
@@ -16,15 +16,27 @@ const handlers = {
 
   login: (request: Request, reply: IReply) => {
     console.log(request.payload);
-    var instance = axios.create({
-    baseURL: 'https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr3.pl',
-    timeout: 1000,
-    headers: {'X-Custom-Header': 'foobar'}
-    });
 
-    instance.post('/', "");
+    var authOptions = {
+      method: 'POST',
+      url: 'https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr3.cancel.pl',
+      headers: {
+          'Authorization': 'Basic ' + request.payload.credentials,
+      },
+      json: true,
+    };
+
+    axios(authOptions)
+      .then(function(response){
+        console.log(response);
+      })
+      .catch(function(err){
+        console.log(err);
+      }
+      ); 
 
     reply({ success: true });
+    
   },
 };
 
