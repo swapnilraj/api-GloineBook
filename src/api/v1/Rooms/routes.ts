@@ -16,11 +16,6 @@ import handlers from './handlers';
 
 const routes: IRouteConfiguration[] = [
   {
-    method: 'GET',
-    path: '/',
-    handler: handlers.getUsers,
-  },
-  {
     method: 'POST',
     path: '/getinfo',
     config: {
@@ -31,6 +26,19 @@ const routes: IRouteConfiguration[] = [
       },
     },
     handler: handlers.getinfo,
+  },
+  {
+    method: 'POST',
+    path: '/checkAvailability',
+    config: {
+      validate: {
+        payload: {
+          credentials: Joi.string().required().description('Encoded credentials of the user'),
+          roomNumber: Joi.number().integer().min(1).max(9).description('Number of the room to check availability against'),
+        },
+      },
+    },
+    handler: handlers.checkAvailability,
   },
 ];
 
