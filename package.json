@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "@types/axios": "^0.9.34",
+    "@types/cheerio": "^0.17.31",
     "@types/glob": "^5.0.30",
     "@types/hapi": "^13.0.37",
     "@types/joi": "^10.0.0",

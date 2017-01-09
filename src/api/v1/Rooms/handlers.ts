@@ -17,12 +17,17 @@ const handlers = {
 
   getinfo: async (request: Request, reply: IReply) => {
     console.log(request.payload);
-    getUserData('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr3.cancel.pl', request.payload.credentials);
+    const userData = await getUserData('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr3.cancel.pl', request.payload.credentials);
+    reply ({ 'fullName': userData[0],
+              'surname': userData[1],
+              'year': userData[2].substring(1, userData[2].length - 1),
+            });
   },
 
   checkAvailability: async (request: Request, reply: IReply) => {
     console.log(request.payload);
-    getRoomData('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr', request.payload.credentials, request.payload.roomNumber);
+    const roomData = await getRoomData('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr', request.payload.credentials, request.payload.roomNumber);
+    reply ({ roomData });
   },
 };
 

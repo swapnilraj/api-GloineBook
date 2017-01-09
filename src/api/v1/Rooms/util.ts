@@ -7,23 +7,26 @@ import {
   checkAvailability,
 } from './controller';
 
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 export const getUserData = async (url: string, credentials: string) => {
     try{
       const response = await userData(url, credentials);
-      let $ = cheerio.load(response);
+      const document: string = response.data as any;
+      const $ = cheerio.load(document);
+      return $('body > h1').text().split('for')[1].split(' ');
     } catch(err) {
       console.log(err);
     }
-
     return null;
 };
 
 export const getRoomData = async (url: string, credentials: string, roomNumber: number) => {
     try{
       const response = await checkAvailability(url, credentials, roomNumber);
-      let $ = cheerio.load(response);
+      const document: string = response.data as any;
+      let $ = cheerio.load(document);
+      $ = $; //temp to avoid lint warnings
     } catch(err) {
       console.log(err);
     }
