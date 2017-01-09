@@ -1,5 +1,5 @@
 /**
- * User route handlers
+ * Room route handlers
  */
 
 import {

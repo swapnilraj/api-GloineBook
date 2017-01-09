@@ -1,5 +1,5 @@
 /**
- * User routes
+ * Room routes
  */
 
 import {
@@ -22,7 +22,7 @@ const routes: IRouteConfiguration[] = [
   },
   {
     method: 'POST',
-    path: '/login',
+    path: '/getinfo',
     config: {
       validate: {
         payload: {
@@ -34,4 +34,4 @@ const routes: IRouteConfiguration[] = [
   },
 ];
 
-export default prefixRoutes('users', routes);
+export default prefixRoutes('rooms', routes);
