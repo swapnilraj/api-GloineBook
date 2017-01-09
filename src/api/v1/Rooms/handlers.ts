@@ -29,8 +29,8 @@ const handlers = {
       })
       .catch(function(err){
         console.log(err);
-      }
-      ); 
+      },
+    ); 
 
     reply({ success: true });
     
@@ -54,8 +54,8 @@ const handlers = {
       })
       .catch(function(err){
         console.log(err);
-      }
-      ); 
+      },
+    ); 
 
     reply({ success: true });
     
