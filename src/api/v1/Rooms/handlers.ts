@@ -30,7 +30,7 @@ const handlers = {
     console.log(request.payload);
     const roomData = await getRoomData('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr',
      request.payload.credentials, request.payload.roomNumber, request.payload.startDate);
-    reply ({ roomData });
+    reply ({  roomData });
   },
 };
 

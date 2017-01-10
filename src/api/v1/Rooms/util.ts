@@ -26,10 +26,9 @@ export const getRoomData = async (url: string, credentials: string, roomNumber: 
       const response = await checkAvailability(url, credentials, roomNumber);
       const document: string = response.data as any;
       const $ = cheerio.load(document);
-      console.log(document);
-      const table = $('tr').text().split('\n');
-      console.log('???????????? '+table[1] + "\n????????????");
+      const table = $('tr').eq(3).text().split('\n')[2];
       console.log(startDate);
+      return table;
     } catch(err) {
       console.log(err);
     }
