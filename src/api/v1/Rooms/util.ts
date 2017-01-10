@@ -26,12 +26,29 @@ export const getRoomData = async (url: string, credentials: string, roomNumber: 
         const response = await checkAvailability(url, credentials, roomNumber);
         const document: string = response.data as any;
         const $ = cheerio.load(document);
-        const table = $('tr').eq(3).text().split('\n')[2].split(' ');
-        console.log(startDate);
+        const table = $('tr').eq(3).children('td').html().split('\n')[2];
+        const bookedSlots = parseTable(table);
+        console.log(startDate + bookedSlots);
         return table;
     } catch(err) {
         console.log(err);
     }
     
+    return null;
+};
+
+//Function temporary state
+
+const parseTable = (table: string) => {
+    const $ = cheerio.load(table);
+    //let bookedSlots = null;
+    $('td').each(function(_index, elm) {
+        const $$ = cheerio.load(elm);
+        if($$('td').attr('bgcolor') === '#ffffff') {
+            console.log('key');
+        } else {
+            console.log('value');
+        }
+    });
     return null;
 };
