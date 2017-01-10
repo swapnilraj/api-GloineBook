@@ -22,7 +22,7 @@ const handlers = {
       reply ({ 'fullName': userData[0],
                 'surname': userData[1],
                 'year': userData[2].substring(1, userData[2].length - 1),
-              });
+            });
     }
   },
 
