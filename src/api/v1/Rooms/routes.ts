@@ -41,6 +41,19 @@ const routes: IRouteConfiguration[] = [
     },
     handler: handlers.checkAvailability,
   },
+  {
+    method: 'POST',
+    path: '/checkAllAvailability',
+    config: {
+      validate: {
+        payload: {
+          credentials: Joi.string().required().description('Encoded credentials of the user'),
+          startDate: Joi.number().integer().description('Date to check availability against'),
+        },
+      },
+    },
+    handler: handlers.checkAllAvailability,
+  },
 ];
 
 export default prefixRoutes('rooms', routes);

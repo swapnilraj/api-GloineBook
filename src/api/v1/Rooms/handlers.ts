@@ -32,6 +32,19 @@ const handlers = {
      request.payload.credentials, request.payload.roomNumber, request.payload.startDate);
     reply ({ [request.payload.roomNumber] : roomData });
   },
+
+  checkAllAvailability: async (request: Request, reply: IReply) => {
+    console.log(request.payload);
+    let roomData;
+    let response;
+    for (let i = 1; i < 10; ++i) {
+      roomData = await getRoomData('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr',
+     request.payload.credentials, i, request.payload.startDate);
+     response = {[i]: roomData};
+    }
+    console.log(response);
+    reply ({ response });
+  },
 };
 
 export default handlers;
