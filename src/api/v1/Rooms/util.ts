@@ -68,15 +68,14 @@ const clean = (values: {
 };
 
 const parseGroup = (group) => {
-  const ret = {
-    date: parseHeader(group.elem),
-    bookings: group.bookings.textContent.split('] ').map(parseBooking).filter(e => !!e) as {
+  const date = parseHeader(group.elem);
+  const bookings = group.bookings.textContent.split('] ').map(parseBooking).filter(e => !!e) as {
         time: string
         name: string
         year: string
-    }[]
-  };
-  return ret;
+    }[];
+    
+  return {[date]: [bookings]};
 };
 
 const parseHeader = (el: HTMLElement) => {
