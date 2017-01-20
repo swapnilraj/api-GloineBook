@@ -36,10 +36,10 @@ const handlers = {
   checkAllAvailability: async (request: Request, reply: IReply) => {
     console.log(request.payload);
     let roomData;
-    let response = {};
+    const response = {};
     for (let i = 1; i < 10; ++i) {
       roomData = await getRoomData('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr',
-     request.payload.credentials, i, request.payload.startDate);
+      request.payload.credentials, i, request.payload.startDate);
       Object.assign(response, { [i]: [roomData] });
     }
     console.log(response);
