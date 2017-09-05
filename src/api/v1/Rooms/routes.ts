@@ -16,11 +16,11 @@ import handlers from './handlers';
 
 const routes: IRouteConfiguration[] = [
   {
-    method: 'POST',
+    method: 'GET',
     path: '/getinfo',
     config: {
       validate: {
-        payload: {
+        query: {
           credentials: Joi.string().required().description('Encoded credentials of the user'),
         },
       },
@@ -28,13 +28,13 @@ const routes: IRouteConfiguration[] = [
     handler: handlers.getinfo,
   },
   {
-    method: 'POST',
-    path: '/checkAvailability',
+    method: 'GET',
+    path: '/availability',
     config: {
       validate: {
-        payload: {
+        query: {
           credentials: Joi.string().required().description('Encoded credentials of the user'),
-          roomNumber: Joi.number().integer().min(1).max(9).description('Number of the room to check availability against'),
+          roomNumber: Joi.number().required().integer().min(1).max(9).description('Number of the room to check availability against'),
           startDate: Joi.number().integer().description('Date to check availability against'),
         },
       },
@@ -42,17 +42,24 @@ const routes: IRouteConfiguration[] = [
     handler: handlers.checkAvailability,
   },
   {
-    method: 'POST',
+    method: 'GET',
     path: '/checkAllAvailability',
     config: {
       validate: {
-        payload: {
+        query: {
           credentials: Joi.string().required().description('Encoded credentials of the user'),
           startDate: Joi.number().integer().description('Date to check availability against'),
         },
       },
     },
     handler: handlers.checkAllAvailability,
+  },
+  {
+    method: 'GET',
+    path: '/echo',
+    handler: (request, reply) => {
+      reply(request.query);
+    },
   },
 ];
 

@@ -16,8 +16,7 @@ import {
 const handlers = {
 
   getinfo: async (request: Request, reply: IReply) => {
-    console.log(request.payload);
-    const userData = await getUserData('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr3.cancel.pl', request.payload.credentials);
+    const userData = await getUserData('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr3.cancel.pl', request.query.credentials);
     if (!!userData) {
       reply ({ 'fullName': userData[0],
                 'surname': userData[1],
@@ -27,22 +26,19 @@ const handlers = {
   },
 
   checkAvailability: async (request: Request, reply: IReply) => {
-    console.log(request.payload);
     const roomData = await getRoomData('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr',
-     request.payload.credentials, request.payload.roomNumber, request.payload.startDate);
-    reply ({ [request.payload.roomNumber] : roomData });
+     request.query.credentials, request.query.roomNumber, request.query.startDate);
+    reply ({ [request.query.roomNumber] : roomData });
   },
 
   checkAllAvailability: async (request: Request, reply: IReply) => {
-    console.log(request.payload);
     let roomData;
     const response = {};
     for (let i = 1; i < 10; ++i) {
       roomData = await getRoomData('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr',
-      request.payload.credentials, i, request.payload.startDate);
+      request.query.credentials, i, request.query.startDate);
       Object.assign(response, { [i]: [roomData] });
     }
-    console.log(response);
     reply ({ response });
   },
 };
