@@ -43,29 +43,19 @@ export const getRoomData = async (url: string, credentials: string, roomNumber: 
 const parseTable = (table: HTMLTableSectionElement, room: number) => {
     const rows = Array.from(table.rows);
     const dates = rows.map((row, i) => ({ elem: row, index: i })).filter(row => row.elem.querySelector('td[bgcolor="#ffffff"]') !== null);
-    console.log(dates.toString())
-    const cleaned = combine(rows, dates);
-    return clean(cleaned, room);
+    return clean(combine(rows, dates), room);
 };
 
 const combine = (rows: HTMLElement[], dates: {
     elem: HTMLElement;
     index: number;
 }[]) => {
-
-    // dates.reduce((acc, date) => {
-    //     const bookings = rows[date.index + 1];
-    //     return {...acc, [date.index]: bookings};
-    // }, {});
-
-    const ret = dates.map(date => {
+    return dates.map(date => {
         const bookings = rows[date.index + 1];
         return Object.assign(date, {
             bookings: bookings.querySelector('font') as HTMLElement,
         });
     });
-
-    return ret;
 };
 
 const clean = (values: {
@@ -73,8 +63,7 @@ const clean = (values: {
     index: number;
     bookings: HTMLElement;
 }[], room: number) => {
-  const ret =  values.reduce((acc, group) => Object.assign(acc, parseGroup(room, group)), {});
-  return ret;
+  return values.reduce((acc, group) => Object.assign(acc, parseGroup(room, group)), {});
 };
 
 const parseGroup = (room: number, group) => {
