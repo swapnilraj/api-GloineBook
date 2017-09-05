@@ -33,7 +33,7 @@ const routes: IRouteConfiguration[] = [
     config: {
       validate: {
         query: {
-          credentials: Joi.string().required().description('Encoded credentials of the user'),
+          credentials: Joi.string().description('Encoded credentials of the user'),
           roomNumber: Joi.number().required().integer().min(1).max(9).description('Number of the room to check availability against'),
           startDate: Joi.number().integer().description('Date to check availability against'),
         },

@@ -26,9 +26,14 @@ const handlers = {
   },
 
   checkAvailability: async (request: Request, reply: IReply) => {
-    const roomData = await getRoomData('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr',
-     request.query.credentials, request.query.roomNumber, request.query.startDate);
-    reply ({ [request.query.roomNumber] : roomData });
+    const roomData = await getRoomData(
+      'https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr',
+      request.query.credentials,
+      request.query.roomNumber,
+      request.query.startDate,
+    );
+
+    reply (roomData);
   },
 
   checkAllAvailability: async (request: Request, reply: IReply) => {

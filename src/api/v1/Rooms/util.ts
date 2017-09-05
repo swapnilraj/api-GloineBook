@@ -24,14 +24,14 @@ export const getUserData = async (url: string, credentials: string) => {
     }
 };
 
+
 export const getRoomData = async (url: string, credentials: string, roomNumber: number, _startDate: number) => {
     try{
         const response = await checkAvailability(url, credentials, roomNumber);
         const document: string = response.data as string;
         const $ = jsdom.jsdom(document);
-
         const table = $.querySelector('body > center:nth-child(7) > table > tbody > tr > td:nth-child(1) > center > table') as HTMLTableSectionElement;
-        return parseTable(table);
+        return parseTable(table, roomNumber);
     } catch(err) {
         console.log(err);
     }
@@ -40,42 +40,52 @@ export const getRoomData = async (url: string, credentials: string, roomNumber: 
 
 //Function temporary state
 
-const parseTable = (table: HTMLTableSectionElement) => {
-
+const parseTable = (table: HTMLTableSectionElement, room: number) => {
     const rows = Array.from(table.rows);
-    const headers = rows.map((row, i) => ({ elem: row, index: i })).filter(row => row.elem.querySelector('td[bgcolor="#ffffff"]') !== null);
-    return clean(combine(rows, headers));
+    const dates = rows.map((row, i) => ({ elem: row, index: i })).filter(row => row.elem.querySelector('td[bgcolor="#ffffff"]') !== null);
+    console.log(dates.toString())
+    const cleaned = combine(rows, dates);
+    return clean(cleaned, room);
 };
 
-const combine = (rows: HTMLElement[], headers: {
-    elem: HTMLElement
-    index: number
+const combine = (rows: HTMLElement[], dates: {
+    elem: HTMLElement;
+    index: number;
 }[]) => {
-    return headers.map(header => {
-        const bookings = rows[header.index + 1];
-        return Object.assign(header, {
+
+    // dates.reduce((acc, date) => {
+    //     const bookings = rows[date.index + 1];
+    //     return {...acc, [date.index]: bookings};
+    // }, {});
+
+    const ret = dates.map(date => {
+        const bookings = rows[date.index + 1];
+        return Object.assign(date, {
             bookings: bookings.querySelector('font') as HTMLElement,
         });
     });
+
+    return ret;
 };
 
 const clean = (values: {
-    elem: HTMLElement
-    index: number
-    bookings: HTMLElement
-}[]) => {
-  return values.map(parseGroup);
+    elem: HTMLElement;
+    index: number;
+    bookings: HTMLElement;
+}[], room: number) => {
+  const ret =  values.reduce((acc, group) => Object.assign(acc, parseGroup(room, group)), {});
+  return ret;
 };
 
-const parseGroup = (group) => {
+const parseGroup = (room: number, group) => {
   const date = parseHeader(group.elem);
-  const bookings = group.bookings.textContent.split('] ').map(parseBooking).filter(e => !!e) as {
-        time: string
-        name: string
-        year: string
+  const bookings = group.bookings.textContent.split('] ').map(booking => parseBooking(room, booking)).filter(e => !!e) as {
+        time: string;
+        name: string;
+        year: string;
     }[];
-    
-  return {[date]: [bookings]};
+
+  return { [date]: bookings };
 };
 
 const parseHeader = (el: HTMLElement) => {
@@ -84,7 +94,7 @@ const parseHeader = (el: HTMLElement) => {
   return content.slice(0, content.indexOf('(') - 1);
 };
 
-const parseBooking = (booking: string) => {
+const parseBooking = (room: number, booking: string) => {
   const val = booking.trim();
 
   if (val === '') {
@@ -96,5 +106,5 @@ const parseBooking = (booking: string) => {
   const name = val.slice(12, yearStart - 1);
   const year = val.slice(yearStart + 1);
 
-  return { time, name, year };
+  return { time, name, year, room };
 };
