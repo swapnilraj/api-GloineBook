@@ -37,14 +37,14 @@ const handlers = {
   },
 
   checkAllAvailability: async (request: Request, reply: IReply) => {
-    let roomData;
-    const response = {};
-    for (let i = 1; i < 10; ++i) {
-      roomData = await getRoomData('https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr',
-      request.query.credentials, i, request.query.startDate);
-      Object.assign(response, { [i]: [roomData] });
-    }
-    reply ({ response });
+    const baseURL = 'https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr';
+    const promises = Array
+      .from({length: 9})
+      .map((_, i) => getRoomData(baseURL, request.query.credentials, i + 1, request.query.startDate));
+
+    const data = await Promise.all(promises);
+    const res = data.reduce((acc, datum) => Object.assign(acc, datum), {});
+    reply(res);
   },
 };
 
