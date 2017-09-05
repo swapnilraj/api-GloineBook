@@ -21,7 +21,7 @@ const routes: IRouteConfiguration[] = [
     config: {
       validate: {
         query: {
-          credentials: Joi.string().required().description('Encoded credentials of the user'),
+          credentials: Joi.string().description('Encoded credentials of the user'),
         },
       },
     },
@@ -29,7 +29,7 @@ const routes: IRouteConfiguration[] = [
   },
   {
     method: 'GET',
-    path: '/availability',
+    path: '/check',
     config: {
       validate: {
         query: {
@@ -39,20 +39,20 @@ const routes: IRouteConfiguration[] = [
         },
       },
     },
-    handler: handlers.checkAvailability,
+    handler: handlers.check,
   },
   {
     method: 'GET',
-    path: '/checkAllAvailability',
+    path: '/all',
     config: {
       validate: {
         query: {
-          credentials: Joi.string().required().description('Encoded credentials of the user'),
+          credentials: Joi.string().description('Encoded credentials of the user'),
           startDate: Joi.number().integer().description('Date to check availability against'),
         },
       },
     },
-    handler: handlers.checkAllAvailability,
+    handler: handlers.all,
   },
   {
     method: 'GET',

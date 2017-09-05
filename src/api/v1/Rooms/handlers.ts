@@ -25,7 +25,7 @@ const handlers = {
     }
   },
 
-  checkAvailability: async (request: Request, reply: IReply) => {
+  check: async (request: Request, reply: IReply) => {
     const roomData = await getRoomData(
       'https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr',
       request.query.credentials,
@@ -36,7 +36,7 @@ const handlers = {
     reply (roomData);
   },
 
-  checkAllAvailability: async (request: Request, reply: IReply) => {
+  all: async (request: Request, reply: IReply) => {
     const baseURL = 'https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr';
     const promises = Array
       .from({length: 9})
