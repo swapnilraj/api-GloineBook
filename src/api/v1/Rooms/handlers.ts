@@ -34,7 +34,7 @@ const handlers = {
       request.query.startDate,
     );
 
-    reply (roomData);
+    reply (roomData || {});
   },
 
   all: async (request: Request, reply: IReply) => {
@@ -45,7 +45,7 @@ const handlers = {
 
     const data = await Promise.all(promises);
     const res = data.reduce((acc, datum) => Object.assign(acc, datum), {});
-    reply(res);
+    reply(res || {});
   },
 
   book: async (request: Request, reply: IReply) => {
@@ -65,7 +65,7 @@ const handlers = {
     } = request.query;
 
     const confirmation = await bookRoom(baseURL, credentials, time, date, month, year);
-    reply(confirmation);
+    reply(confirmation || {});
   },
 };
 
