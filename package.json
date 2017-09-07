@@ -7,23 +7,24 @@
   "author": "Sswapnil Raj <sr@sraj.me>",
   "license": "MIT",
   "scripts": {
+    "precompile": "rm -r build || true",
     "compile": "tsc",
     "lint": "tslint --project tsconfig.json -c tslint.json .",
     "prestart": "npm run compile && npm run lint",
     "start": "node ."
   },
   "devDependencies": {
-    "@types/axios": "^0.9.34",
     "@types/glob": "^5.0.30",
     "@types/hapi": "^13.0.37",
     "@types/joi": "^10.0.0",
     "@types/jsdom": "^2.0.29",
     "@types/ramda": "^0.0.2",
     "tslint": "^4.2.0",
-    "typescript": "^2.1.4"
+    "typescript": "^2.5.2"
   },
   "dependencies": {
-    "axios": "^0.15.3",
+    "axios": "^0.16.2",
+    "form-data": "^2.3.1",
     "glob": "^7.1.1",
     "good": "^7.1.0",
     "good-console": "^6.2.0",

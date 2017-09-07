@@ -10,6 +10,7 @@ import {
 import {
   getRoomData,
   getUserData,
+  bookRoom,
 } from './util';
 
 
@@ -45,6 +46,26 @@ const handlers = {
     const data = await Promise.all(promises);
     const res = data.reduce((acc, datum) => Object.assign(acc, datum), {});
     reply(res);
+  },
+
+  book: async (request: Request, reply: IReply) => {
+    const baseURL = `https://www.scss.tcd.ie/cgi-bin/webcal/sgmr/sgmr${request.query.room}.request.pl`;
+    Object.assign(request.query, {
+      ...request.query,
+      time: request.query.time + 1,
+      year: request.query.year - new Date().getFullYear() + 1,
+    });
+
+    const {
+      credentials,
+      time,
+      date,
+      month,
+      year,
+    } = request.query;
+
+    const confirmation = await bookRoom(baseURL, credentials, time, date, month, year);
+    reply(confirmation);
   },
 };
 

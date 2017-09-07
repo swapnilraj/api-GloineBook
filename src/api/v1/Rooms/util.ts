@@ -5,6 +5,7 @@
 import {
   userData,
   checkAvailability,
+  bookRoom as bookRoomApi,
 } from './controller';
 
 import * as jsdom from 'jsdom';
@@ -24,6 +25,23 @@ export const getUserData = async (url: string, credentials: string) => {
     }
 };
 
+export const bookRoom = async (url: string,
+    credentials: string,
+    time: number,
+    date: number,
+    month: number,
+    year: number) => {
+    try {
+        const response = await bookRoomApi(url, credentials, time, date, month, year);
+        const document: string = response as string;
+        const $ = jsdom.jsdom(document);
+        const bookingMessage = ($.querySelector('body font') as Element).textContent;
+        return bookingMessage;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
 
 export const getRoomData = async (url: string, credentials: string, roomNumber: number, _startDate: number) => {
     try{
