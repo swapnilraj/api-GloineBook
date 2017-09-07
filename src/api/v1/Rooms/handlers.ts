@@ -65,7 +65,7 @@ const handlers = {
     } = request.query;
 
     const confirmation = await bookRoom(baseURL, credentials, time, date, month, year);
-    reply(confirmation || {});
+    reply({ message: confirmation || 'Error' });
   },
 };
 
