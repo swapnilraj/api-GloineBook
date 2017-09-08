@@ -41,7 +41,7 @@ export const bookRoom = async (
     year: number): Promise<string> => {
 
     const data = new FormData();
-    data.append('Fullname', 'mario');
+    data.append('Fullname', 'wabbalabbadubdub');
     data.append('StartTime', time);
     data.append('EndTime', time + 1);
     data.append('StartDate', date);
