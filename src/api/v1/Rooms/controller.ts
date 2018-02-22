@@ -4,7 +4,7 @@
 
 'use strict';
 
-import * as FormData from 'form-data';
+import * as querystring from 'querystring';
 import axios from 'axios';
 
 export const userData = (url: string, credentials: string) => {
@@ -40,13 +40,14 @@ export const bookRoom = async (
     month: number,
     year: number): Promise<string> => {
 
-    const data = new FormData();
-    data.append('Fullname', 'wabbalabbadubdub');
-    data.append('StartTime', time);
-    data.append('EndTime', time + 1);
-    data.append('StartDate', date);
-    data.append('StartMonth', month);
-    data.append('StartYear', year);
+    const data = querystring.stringify({
+     'Fullname': 'wabbalabbadubdub',
+     'StartTime': time,
+     'EndTime': time + 1,
+     'StartDate': date,
+     'StartMonth': month,
+     'StartYear': year,
+    });
 
     const opts = {
         method: 'POST',
