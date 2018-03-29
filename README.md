@@ -1,4 +1,4 @@
-# api-GlioneBook
+# api-GloineBook
 
 [Gloine](https://en.wiktionary.org/wiki/gloine)Book is a REST-based API for the Glassrooms in Hamilton.
 
