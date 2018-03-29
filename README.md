@@ -13,12 +13,15 @@
 ## /all
 ### Query Parameters:
 *credentials*: Base64 Encoded credentials of the user
+
 *startDate*: Date to check availability against
 
 ## /check
 ### Query Parameters:
 *credentials*: Base64 Encoded credentials of the user
+
 *room*: Number of the room to check availability against
+
 *startDate*: Date to check availability against
 
 ## /getifo
@@ -28,10 +31,15 @@
 ## /book
 ### Query Parameters:
 *credentials*: Base64 Encoded credentials of the user
+
 *room*: Number of the room to book
+
 *time*: Start time for booking
+
 *date*: Start date for booking
+
 *month*: Start month for booking
+
 *year*: Start year for booking
 
 ## /echo
