@@ -2,6 +2,12 @@
 
 [Gloine](https://en.wiktionary.org/wiki/gloine)Book is a REST-based API for the Glassrooms in Hamilton.
 
+Test the api at gb.sixth.io/v1/rooms
+
+## Endpoint prefix:
+
+`/v1/rooms/`
+
 # API-endpoints:
 
 * /all - Returns all the bookings for all the rooms.
