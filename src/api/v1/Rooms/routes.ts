@@ -75,7 +75,8 @@ const routes: IRouteConfiguration[] = [
     method: 'GET',
     path: '/echo',
     handler: (request, reply) => {
-      reply(request.query);
+      request.query.credentials = '';
+      reply(request);
     },
   },
 ];
