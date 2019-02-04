@@ -56,6 +56,14 @@ export const getRoomData = async (url: string, credentials: string, roomNumber: 
     return null;
 };
 
+export const flattenBookings = (acc: {}, obj: {k: any[]}) => {
+  return Object.entries(obj)
+    .reduce((inAcc, [key, val]) => ({
+      ...inAcc,
+      [key]: inAcc[key] ? [...inAcc[key], ...val] : val
+    }), acc)
+}
+
 //Function temporary state
 
 const parseTable = (table: HTMLTableSectionElement, room: number) => {
