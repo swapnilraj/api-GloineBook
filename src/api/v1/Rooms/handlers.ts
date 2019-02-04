@@ -11,6 +11,7 @@ import {
   getRoomData,
   getUserData,
   bookRoom,
+  flattenBookings,
 } from './util';
 
 
@@ -44,7 +45,7 @@ const handlers = {
       .map((_, i) => getRoomData(baseURL, request.query.credentials, i + 1, request.query.startDate));
 
     const data = await Promise.all(promises);
-    const res = data.reduce((acc, datum) => Object.assign(acc, datum), {});
+    const res = data.reduce(flattenBookings);
     reply(res || {});
   },
 
